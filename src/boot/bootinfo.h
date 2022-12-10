@@ -1,0 +1,11 @@
+#define MAGIC 0x1BADB002
+#define FLAGS 0x00000007
+#define CHECKSUM (-(MAGIC + FLAGS))
+
+#define HEADER_ADDR 0x20000
+#define LOAD_ADDR 0x20000
+
+#define MODE_TYPE 1
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+#define DEPTH 0
