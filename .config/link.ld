@@ -7,7 +7,7 @@ SECTIONS {
     . = 1M;
 
     .text BLOCK(4K) : ALIGN(4K) {
-        target/boot.o(.multiboot);
+        KEEP(*(.multiboot));
         *(.text);
     }
 

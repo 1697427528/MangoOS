@@ -20,14 +20,10 @@ enum vga_color {
 	VGA_COLOR_WHITE = 15,
 };
 
-static u16* vga_buffer;
-static int colunm;
-static int row;
-
 void vga_init();
 
-u16 zip_data(unsigned char c, u8 color);
+u16 zip_data(char c, u8 color);
 
-void put_string(unsigned char* string, u8 color);
+void put_string(char* string, u8 color);
 
-void put_char(unsigned char c, u8 color);
+void put_char(char c, u8 color);
