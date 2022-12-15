@@ -1,16 +1,16 @@
-ENTRY(mango_os_start)
+ENTRY(mango_os_start_32)
 
 SECTIONS {
     . = 4K;
 
     .text BLOCK(4K) : ALIGN(4K) {
-        KEEP(*(.multiboot));
-        KEEP(*(.gdt32));
-        KEEP(*(.gdt64));
+        KEEP(*(.multiboot2));
         *(.text);
     }
 
     .rodata BLOCK(4K) : ALIGN(4K) {
+        KEEP(*(.gdt32));
+        KEEP(*(.gdt64));
         *(.rodata*);
     }
 

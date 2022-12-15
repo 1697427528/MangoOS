@@ -1,26 +1,34 @@
 .code32
-#include "boot/multiboot.inc"
+#include "boot/multiboot2.inc"
 #include "boot/boot.inc"
 
 
-.section .multiboot
-multiboot:
-    .align 32
+.section .multiboot2
+HEADER_LENGTH = multiboot2_header_end - multiboot2_header_start
+CHECKSUM = -(HEADER_LENGTH + MAGIC + ARCHITECTURE)
+multiboot2_header_start:
+    .align 8
     .long MAGIC
-    .long FLAGS
+    .long ARCHITECTURE
+    .long HEADER_LENGTH
     .long CHECKSUM
-    
-    .long multiboot
-    .long multiboot
+
+    header_tag_start:
+    .long 2 
+    .long header_tag_end - header_tag_start
+    .long multiboot2_header_start
+    .long multiboot2_header_start
     .long _edata
     .long _end
+    header_tag_end:
+
+    entry_tag_start:
+    .long 3
+    .long entry_tag_end - entry_tag_start
     .long mango_os_start_32
-
-    .long MODE_TYPE
-    .long VGA_WIDTH
-    .long VGA_HEIGHT
-    .long DEPTH
-
+    entry_tag_end:
+    .long 0
+multiboot2_header_end:
 
 .section .gdt32
     GDT32:
