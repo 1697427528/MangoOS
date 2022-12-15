@@ -1,7 +1,9 @@
+#ifndef __VGA_H__
+#define __VGA_H__
+
 #include "type.h"
 
-
-enum vga_color {
+enum VGACOLOR {
 	VGA_COLOR_BLACK = 0,
 	VGA_COLOR_BLUE = 1,
 	VGA_COLOR_GREEN = 2,
@@ -20,10 +22,19 @@ enum vga_color {
 	VGA_COLOR_WHITE = 15,
 };
 
+typedef struct _VGAContext {
+	u16* vga_buffer;
+	u8 colunm;
+	u8 row;
+} VGAContext;
+
+
 void vga_init();
 
 u16 zip_data(char c, u8 color);
 
-void put_string(char* string, u8 color);
+void put_string(VGAContext* vga_context, char* string, u8 color);
 
-void put_char(char c, u8 color);
+void put_char(VGAContext* vga_context, char c, u8 color);
+
+#endif
