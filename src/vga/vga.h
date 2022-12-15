@@ -3,24 +3,30 @@
 
 #include "type.h"
 
-enum VGACOLOR {
-	VGA_COLOR_BLACK = 0,
-	VGA_COLOR_BLUE = 1,
-	VGA_COLOR_GREEN = 2,
-	VGA_COLOR_CYAN = 3,
-	VGA_COLOR_RED = 4,
-	VGA_COLOR_MAGENTA = 5,
-	VGA_COLOR_BROWN = 6,
-	VGA_COLOR_LIGHT_GREY = 7,
-	VGA_COLOR_DARK_GREY = 8,
-	VGA_COLOR_LIGHT_BLUE = 9,
-	VGA_COLOR_LIGHT_GREEN = 10,
-	VGA_COLOR_LIGHT_CYAN = 11,
-	VGA_COLOR_LIGHT_RED = 12,
-	VGA_COLOR_LIGHT_MAGENTA = 13,
-	VGA_COLOR_LIGHT_BROWN = 14,
-	VGA_COLOR_WHITE = 15,
-};
+
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+
+
+typedef enum _VGACOLOR {
+	VC_BLACK = 0,
+	VC_BLUE = 1,
+	VC_GREEN = 2,
+	VC_CYAN = 3,
+	VC_RED = 4,
+	VC_MAGENTA = 5,
+	VC_BROWN = 6,
+	VC_LIGHT_GREY = 7,
+	VC_DARK_GREY = 8,
+	VC_LIGHT_BLUE = 9,
+	VC_LIGHT_GREEN = 10,
+	VC_LIGHT_CYAN = 11,
+	VC_LIGHT_RED = 12,
+	VC_LIGHT_MAGENTA = 13,
+	VC_LIGHT_BROWN = 14,
+	VC_WHITE = 15,
+} VGACOLOR;
+
 
 typedef struct _VGAContext {
 	u16* vga_buffer;
@@ -29,12 +35,12 @@ typedef struct _VGAContext {
 } VGAContext;
 
 
-void vga_init();
+void init_vga();
 
-u16 zip_data(char c, u8 color);
+u16 zip_data(char c, VGACOLOR color);
 
-void put_string(VGAContext* vga_context, char* string, u8 color);
+void put_string(char* string, VGACOLOR color);
 
-void put_char(VGAContext* vga_context, char c, u8 color);
+void put_char(char c, VGACOLOR color);
 
 #endif

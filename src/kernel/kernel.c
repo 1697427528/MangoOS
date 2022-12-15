@@ -1,10 +1,14 @@
 #include "type.h"
 #include "vga/vga.h"
+#include "memory/memory.h"
 
 void mango_kernel_init() {
-    VGAContext vga_context;
-    vga_init(&vga_context);
+    init_vga();
+    init_memory();
+}
+
+void mango_kernel_main() {
     for (u16 i=0;i<24;i++) {
-        put_string(&vga_context, "Hello World !  I'm Mango OS ! \n", VGA_COLOR_LIGHT_CYAN);
+        put_string("Hello World !  I'm Mango OS ! \n", VC_LIGHT_CYAN);
     }
 }

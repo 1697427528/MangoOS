@@ -147,5 +147,6 @@ multiboot2_header_end:
     mango_os_start_64:
         mov $stack_top, %rsp
         call mango_kernel_init
+        call mango_kernel_main
     mango_os_end_loop:
         jmp mango_os_end_loop
