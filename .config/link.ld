@@ -5,6 +5,7 @@ SECTIONS {
 
     .text BLOCK(4K) : ALIGN(4K) {
         KEEP(*(.multiboot2));
+        *(.text.boot);
         *(.text);
     }
 

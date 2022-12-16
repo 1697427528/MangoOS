@@ -19,7 +19,7 @@ CC_FALGS = -I${SRC_ROOT} ${CC_OS_FLAGS} ${CC_WARN_FLAGS} -c ${CC_OPTIMIZE_FLAGS}
 LINK =  x86_64-elf-ld
 LINK_FLAGS = -T.config/link.ld
 
-ALL_SRC_FILES = boot/boot.S kernel/kernel.c vga/vga.c memory/memory.c
+ALL_SRC_FILES = ${patsubst src/%, %, ${shell find src -name "*.[cS]"}}
 ALL_OBJ_FILES = $(patsubst %, ${OBJ_ROOT}/%.o, ${ALL_SRC_FILES})
 
 build: ${MANGO_ISO}

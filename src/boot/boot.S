@@ -1,9 +1,10 @@
 .code32
-#include "boot/multiboot2.inc"
 #include "boot/boot.inc"
 
 
 .section .multiboot2
+MAGIC = 0xe85250d6
+ARCHITECTURE = 0x0
 HEADER_LENGTH = multiboot2_header_end - multiboot2_header_start
 CHECKSUM = -(HEADER_LENGTH + MAGIC + ARCHITECTURE)
 multiboot2_header_start:
@@ -77,7 +78,13 @@ multiboot2_header_end:
         .skip 4096 * PDPE_NUM, 0
 
 
-.section .text
+.section .data
+    .global multiboot2_info_pointer
+    multiboot2_info_pointer:
+        .long 0
+
+
+.section .text.boot
     .global mango_os_start_32
     mango_os_start_32:
         cli
@@ -87,6 +94,11 @@ multiboot2_header_end:
         lretl
     
     _protect_code_start:
+        _init_multiboot_info:
+            cmpl $0x36d76289, %eax
+            movb $'M, %ah
+            jne mango_os_error
+            movl %ebx, multiboot2_info_pointer
         _init_register:
             movw $GDT32_DATA_SELECTOR, %ax
             movw %ax, %es
@@ -142,7 +154,7 @@ multiboot2_header_end:
 
 
 .code64
-.section .text
+.section .text.boot
     .global mango_os_start_64
     mango_os_start_64:
         mov $stack_top, %rsp
@@ -150,3 +162,17 @@ multiboot2_header_end:
         call mango_kernel_main
     mango_os_end_loop:
         jmp mango_os_end_loop
+
+
+.code32
+.section .text.boot
+    mango_os_error:
+        movl $0x04450420, 0xb8000
+        movl $0x04720472, 0xb8004
+        movl $0x0472046f, 0xb8008
+        movl $0x0420043a, 0xb800c
+        movb $0x0b, %ah
+        movw %ax, 0xb8010
+    _error_loop:
+        hlt
+        jmp _error_loop

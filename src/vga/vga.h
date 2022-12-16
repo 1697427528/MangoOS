@@ -39,8 +39,10 @@ void init_vga();
 
 u16 zip_data(char c, VGACOLOR color);
 
-void put_string(char* string, VGACOLOR color);
+void print(char* string, VGACOLOR color);
 
-void put_char(char c, VGACOLOR color);
+void println(char* string, VGACOLOR color);
+
+void print_char(char c, VGACOLOR color);
 
 #endif
