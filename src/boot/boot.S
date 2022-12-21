@@ -73,9 +73,9 @@ multiboot2_header_end:
     .global pdpt_top
     pdpt_top:
         .skip 4096, 0
-    .global pdt_top
-    pdt_top:
-        .skip 4096 * PDPE_NUM, 0
+    .global pd_top
+    pd_top:
+        .skip 4096 * PDPTE_NUM, 0
 
 
 .section .data
@@ -113,12 +113,12 @@ multiboot2_header_end:
             movl $0, %edi
             PutEntry XD_NONE, $pdpt_top, ATTR_RW_READ_WRITE | ATTR_PRESENT
             movl $pdpt_top, %ebp
-            _put_pdpe:
-                PutEntry XD_NONE, $pdt_top, ATTR_RW_READ_WRITE | ATTR_PRESENT
+            _put_pdpte:
+                PutEntry XD_NONE, $pd_top, ATTR_RW_READ_WRITE | ATTR_PRESENT
                 incl %edi
-                cmpl $PDPE_NUM, %edi
-                jne _put_pdpe
-            movl $pdt_top, %ebp
+                cmpl $PDPTE_NUM, %edi
+                jne _put_pdpte
+            movl $pd_top, %ebp
             movl $0, %edi
             _put_pde:
                 Put2MEntry XD_NONE, ATTR_RW_READ_WRITE + ATTR_PRESENT + ATTR_PAGESIZE
